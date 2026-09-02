@@ -1,0 +1,186 @@
+---
+import ClientRouter from 'astro/components/ClientRouter.astro';
+interface Props {
+    title: string;
+    description?: string;
+    /** «Хром» docs-страниц (топбар/сайдбар/поиск/футер): index, documentation, classless */
+    withDocsShell?: boolean;
+    /** Стили карточек/демо-секций (.lib-section и т.д.): index, classless */
+    withDocsSections?: boolean;
+    /** Загружать Alpine.js и lib-docs.js (нужны только для docs-страниц с компонентами) */
+    withDocsScripts?: boolean;
+}
+const {
+    title,
+    description,
+    withDocsShell = false,
+    withDocsSections = false,
+    withDocsScripts = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL('/img/og-image.png', Astro.site);
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="icon"
+            href={`${import.meta.env.BASE_URL}img/logo-xs.png`}
+            sizes="32x32"
+            type="image/png"
+        />
+
+        <!-- njX CSS Library -->
+        <link
+            rel="stylesheet"
+            href={`${import.meta.env.BASE_URL}css/style.min.css`}
+            fetchpriority="high"
+        />
+        <!-- Общие паттерны сайта (mode-бар и т.п.) -->
+        <link
+            rel="stylesheet"
+            href={`${import.meta.env.BASE_URL}styles/site-shared.css`}
+        />
+        <!-- Docs UI styles: shell — хром страницы, sections — карточки демо.
+             documentation грузит только shell (из sections она не использовала
+             ни одного класса — раньше возила ~1400 лишних строк) -->
+        {
+            withDocsShell && (
+                <link
+                    rel="stylesheet"
+                    href={`${import.meta.env.BASE_URL}styles/docs-shell.css`}
+                    fetchpriority="high"
+                />
+            )
+        }
+        {
+            withDocsSections && (
+                <link
+                    rel="stylesheet"
+                    href={`${import.meta.env.BASE_URL}styles/docs-sections.css`}
+                    fetchpriority="high"
+                />
+            )
+        }
+
+        <!-- View Transitions — плавное переключение страниц -->
+        <ClientRouter />
+
+        <!-- Анти-флэш: читаем тему ДО рендера страницы (+ после каждой навигации VT) -->
+        <script is:inline>
+            function njxRestoreTheme() {
+                try {
+                    var t = localStorage.getItem('njx-theme');
+                    if (t)
+                        document.documentElement.setAttribute('data-theme', t);
+                } catch (e) {}
+            }
+            njxRestoreTheme();
+            document.addEventListener('astro:after-swap', njxRestoreTheme);
+        </script>
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&family=Roboto:wght@300;400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <!-- Аналитика: только Cloudflare Web Analytics (бескуковая, на уровне
+             хостинга) — Clicky и GA4 удалены сознательно (privacy).
+             njxTrack оставлен no-op'ом: вызовы разбросаны по сайту. -->
+        <script is:inline>
+            window.njxTrack = function () {};
+        </script>
+
+        <!-- njX JS (всегда — theme, tabs, modal, accordion, toast) -->
+        <script is:inline src={`${import.meta.env.BASE_URL}js/njx.js`}></script>
+
+        <!-- Общие утилиты сайта: njxCopy/njxCopyBtn и т.п. (не дистрибутив) -->
+        <script is:inline src={`${import.meta.env.BASE_URL}scripts/njx-site.js`}
+        ></script>
+
+        <!-- На время VT-кроссфейда смены темы (njxApplyTheme) глушим
+             поэлементные CSS-transition — иначе двойная анимация и
+             «кусочная» перекраска. Здесь, а не в lib-docs.css, потому что
+             тему меняют на всех страницах -->
+        <style is:global>
+            .vt-active * {
+                transition: none !important;
+            }
+        </style>
+
+        <!-- Аналитика сайта поверх njx.js (сам njx.js — дистрибутив, его не трогаем) -->
+        <script is:inline>
+            (function () {
+                // theme_change: оборачиваем njxSetTheme
+                var origSetTheme = window.njxSetTheme;
+                if (origSetTheme) {
+                    window.njxSetTheme = function (t) {
+                        origSetTheme(t);
+                        window.njxTrack && njxTrack('theme_change', { theme: t });
+                    };
+                }
+                // github_click / donate_click: делегирование на все внешние ссылки
+                document.addEventListener(
+                    'click',
+                    function (e) {
+                        var a = e.target.closest && e.target.closest('a[href]');
+                        if (!a || !window.njxTrack) return;
+                        var href = a.href || '';
+                        if (href.indexOf('github.com/njbSaab') !== -1) {
+                            njxTrack('github_click', { link_url: href });
+                        } else if (href.indexOf('ko-fi.com') !== -1) {
+                            njxTrack('donate_click', { link_url: href });
+                        }
+                    },
+                    true
+                );
+            })();
+        </script>
+
+        <!-- Docs scripts — только для страниц с docs-компонентами -->
+        {
+            withDocsScripts && (
+                <>
+                    <script
+                        is:inline
+                        defer
+                        src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"
+                    />
+                    <script
+                        is:inline
+                        src={`${import.meta.env.BASE_URL}scripts/lib-docs.js`}
+                    />
+                </>
+            )
+        }
+
+        <!-- Title и description — уникальны для каждой страницы -->
+        <title>{title}</title>
+        <meta name="description" content={description} />
+
+        <!-- SEO: canonical + OG/Twitter для всех страниц (из props title/description) -->
+        <link rel="canonical" href={canonicalURL} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="njX UI" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonicalURL} />
+        <meta property="og:image" content={ogImageURL} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImageURL} />
+
+        <!-- Слот для page-level вещей: inline <style>, JSON-LD -->
+        <slot name="head" />
+    </head>
+    <body>
+        <slot />
+    </body>
+</html>

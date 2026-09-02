@@ -1,0 +1,239 @@
+---
+import { dedent, escapeHtml, highlightHtml, highlightCss, highlightJs } from './code-utils.js';
+
+interface CodeVariant {
+    id: string; // 'html' | 'alpine' | 'js' — значение data-code-variant
+    label: string; // подпись таба
+    lang?: string; // default — lang окна
+    code: string;
+}
+
+interface Props {
+    code: string;
+    lang?: string;
+    label?: string; // подпись в шапке окна (plain text)
+    filename?: string;
+    frame?: 'lib' | 'sc'; // lib — секции (сворачиваемое окно); sc — documentation (всегда открыто)
+    compact?: boolean;
+    variants?: CodeVariant[]; // ≥2 варианта кода → табы в шапке вместо лейбла (только frame="lib")
+    class?: string;
+    style?: string;
+}
+
+const {
+    code,
+    lang = 'html',
+    label,
+    filename,
+    frame = 'lib',
+    compact = false,
+    variants,
+    class: className = '',
+    style,
+} = Astro.props;
+
+const highlight = (src: string, l: string) =>
+    l === 'html'
+        ? highlightHtml(src)
+        : l === 'css'
+          ? highlightCss(src)
+          : l === 'js'
+            ? highlightJs(src)
+            : escapeHtml(src);
+
+const normalizedCode = dedent(code).trim();
+const highlightedCode = highlight(normalizedCode, lang);
+
+// Табы вариантов (HTML / +Alpine / …): первый вариант активен, копируется активный
+const codeVariants = (variants ?? []).map((v) => {
+    const src = dedent(v.code).trim();
+    return { ...v, code: src, html: highlight(src, v.lang ?? lang) };
+});
+const hasTabs = frame === 'lib' && codeVariants.length > 1;
+
+const windowLabel = label || filename || 'HTML';
+---
+
+{/* Хром (Show code, mac-dots, Copy) — статическая разметка; поведение —
+    делегированные обработчики в njx-site.js (data-code-toggle/data-code-copy).
+    data-code-ready="1" — initCodeToggles из lib-docs.js пропускает такие окна
+    (runtime-инъекция осталась только для легаси: classless + Tokens showcase). */}
+{frame === 'sc' && (
+    <div class={`sc-code-wrap ${className}`.trim()} style={style} data-code-block>
+        <div class="sc-code-header">
+            <div class="sc-code-dots">
+                <div class="sc-code-dot" style="background:#ff5f57"></div>
+                <div class="sc-code-dot" style="background:#febc2e"></div>
+                <div class="sc-code-dot" style="background:#28c840"></div>
+            </div>
+            {(label || filename) && (
+                <span class="sc-code-filename">{label || filename}</span>
+            )}
+            <button class="sc-code-copy" type="button" data-code-copy>Copy</button>
+        </div>
+        <div class="sc-code-body" data-raw={normalizedCode}>
+            <pre
+                class={`codeblock-pre language-${lang}`}><code set:html={highlightedCode} /></pre>
+        </div>
+    </div>
+)}
+{frame === 'lib' && (
+<Fragment>
+<button class="lib-code-reveal-btn" type="button" data-code-toggle>
+    <svg
+        width="13"
+        height="13"
+        viewBox="0 0 16 16"
+        fill="currentColor"
+        style="flex-shrink:0;opacity:.75"
+    >
+        <path
+            d="M5.78 4.03a.75.75 0 0 1 0 1.06L3.87 7l1.91 1.91a.75.75 0 1 1-1.06 1.06l-2.47-2.47a.75.75 0 0 1 0-1.06l2.47-2.47a.75.75 0 0 1 1.06 0zm4.44 0a.75.75 0 0 1 1.06 0l2.47 2.47a.75.75 0 0 1 0 1.06l-2.47 2.47a.75.75 0 1 1-1.06-1.06L12.13 7l-1.91-1.91a.75.75 0 0 1 0-1.06z"
+        ></path>
+    </svg>
+    <span class="lib-crb-text">Show code</span>
+    <svg
+        class="lib-crb-chevron"
+        width="12"
+        height="12"
+        viewBox="0 0 16 16"
+        fill="currentColor"
+        style="flex-shrink:0"
+    >
+        <path
+            d="M3.22 6.03a.75.75 0 0 1 1.06 0L8 9.75l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L3.22 7.09a.75.75 0 0 1 0-1.06z"
+        ></path>
+    </svg>
+</button>
+<div
+    class={`lib-code-wrapper ${compact ? 'is-compact' : ''} ${className}`}
+    data-code-block
+    data-code-ready="1"
+>
+    <div class="lib-code-inner">
+        <div class="lib-code-header">
+            <div class="lib-code-mac-dots">
+                <div class="lib-code-mac-dot" style="background:#ff5f57"></div>
+                <div class="lib-code-mac-dot" style="background:#febc2e"></div>
+                <div class="lib-code-mac-dot" style="background:#28c840"></div>
+            </div>
+            {
+                hasTabs ? (
+                    <div class="lib-code-tabs" role="tablist">
+                        {codeVariants.map((v, i) => (
+                            <button
+                                class={`lib-code-tab ${i === 0 ? 'is-active' : ''}`.trim()}
+                                type="button"
+                                data-code-tab={v.id}
+                            >
+                                {v.label}
+                            </button>
+                        ))}
+                    </div>
+                ) : (
+                    <span class="lib-code-label">{windowLabel}</span>
+                )
+            }
+            <button class="lib-copy-btn" type="button" data-code-copy>
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                        d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"
+                    ></path>
+                    <path
+                        d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"
+                    ></path>
+                </svg>
+                Copy
+            </button>
+        </div>
+        <div class="lib-code-container">
+            {
+                hasTabs ? (
+                    codeVariants.map((v, i) => (
+                        <div
+                            class={`lib-code ${i === 0 ? 'is-active' : ''}`.trim()}
+                            data-raw={v.code}
+                            data-code-variant={v.id}
+                        >
+                            <pre class={`codeblock-pre language-${v.lang ?? lang}`}><code set:html={v.html} /></pre>
+                        </div>
+                    ))
+                ) : (
+                    <div
+                        class="lib-code"
+                        data-raw={normalizedCode}
+                        data-code-filename={filename}
+                    >
+                        <pre
+                            class={`codeblock-pre language-${lang}`}><code set:html={highlightedCode} /></pre>
+                    </div>
+                )
+            }
+        </div>
+    </div>
+</div>
+</Fragment>
+)}
+
+<style is:global>
+    /* Табы вариантов кода (HTML / Alpine.js …) — переключение в njx-site.js [data-code-tab] */
+    .lib-code-tabs {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        min-width: 0;
+    }
+
+    .lib-code-tab {
+        appearance: none;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        padding: 2px 10px;
+        font-size: 11px;
+        font-family: 'Roboto Mono', monospace;
+        color: #555;
+        cursor: pointer;
+        transition: color 0.15s ease, background 0.15s ease;
+        white-space: nowrap;
+    }
+
+    .lib-code-tab:hover {
+        color: #999;
+    }
+
+    .lib-code-tab.is-active {
+        color: #c9c9c9;
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .lib-code-container .lib-code[data-code-variant]:not(.is-active) {
+        display: none;
+    }
+
+    .lib-code .codeblock-pre,
+    .sc-code-body .codeblock-pre {
+        margin: 0;
+        padding: 0;
+        background: transparent !important;
+        border: 0;
+        white-space: pre;
+        overflow-x: auto;
+    }
+
+    /* нейтрализуем страничные стили инлайнового <code> (подложка/цвет/паддинги),
+       которые иначе ложатся на <pre><code> внутри окна */
+    .lib-code .codeblock-pre code,
+    .sc-code-body .codeblock-pre code {
+        display: block;
+        background: transparent;
+        color: inherit;
+        padding: 0;
+        border-radius: 0;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+</style>

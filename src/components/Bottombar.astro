@@ -1,0 +1,291 @@
+---
+interface Props {
+    activePage?: 'classless';
+}
+const { activePage = 'classless' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<div class="bb" id="page-bottombar">
+    <div class="bb-inner">
+        <!-- LEFT: nav links -->
+        <nav class="bb-nav">
+            <a
+                href={base}
+                class={`bb-nav-btn${activePage === 'classless' ? ' active' : ''}`}
+                data-tip="Classless Components"
+            >
+                <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+            </a>
+            {/* Full-библиотека — основной сайт */}
+            <a
+                href="https://njxui.dev"
+                class="bb-nav-btn"
+                data-tip="njX UI Full → njxui.dev"
+            >
+                <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                    ></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </a>
+        </nav>
+
+        <div class="bb-sep"></div>
+
+        <!-- RIGHT: theme dots -->
+        <div class="bb-themes">
+            <div
+                class="bb-dot"
+                style="background:#4a4a56"
+                data-t="dark"
+                title="dark"
+            >
+            </div>
+            <div
+                class="bb-dot"
+                style="background:#e2e8f0"
+                data-t="light"
+                title="light"
+            >
+            </div>
+            <div
+                class="bb-dot"
+                style="background:#f43f5e"
+                data-t="red"
+                title="red"
+            >
+            </div>
+            <div
+                class="bb-dot"
+                style="background:#3b82f6"
+                data-t="blue"
+                title="blue"
+            >
+            </div>
+            <div
+                class="bb-dot"
+                style="background:#22c55e"
+                data-t="green"
+                title="green"
+            >
+            </div>
+            <div
+                class="bb-dot"
+                style="background:#00e5ff"
+                data-t="cyan"
+                title="cyan"
+            >
+            </div>
+            <div
+                class="bb-dot"
+                style="background:#facc15"
+                data-t="yellow"
+                title="yellow"
+            >
+            </div>
+            <div
+                class="bb-dot"
+                style="background:#ec4899"
+                data-t="pink"
+                title="pink"
+            >
+            </div>
+            <div
+                class="bb-dot"
+                style="background:#a855f7"
+                data-t="purple"
+                title="purple"
+            >
+            </div>
+        </div>
+    </div>
+</div>
+
+<script is:inline>
+    (function () {
+        // ClientRouter НЕ перезапускает одинаковые inline-скрипты при VT-навигации,
+        // поэтому инициализируем бар на каждый astro:page-load — иначе замыкание
+        // держит старый (отсоединённый) DOM-узел и новый бар не показывается.
+        function initBottombar() {
+            var bar = document.getElementById('page-bottombar');
+            if (!bar) return;
+
+            // ── Scroll trigger: show after first screen ──
+            if (window._bbScroll) {
+                window.removeEventListener('scroll', window._bbScroll);
+            }
+            function onScroll() {
+                bar.classList.toggle(
+                    'visible',
+                    window.scrollY > window.innerHeight * 0.6,
+                );
+            }
+            window._bbScroll = onScroll;
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            // ── Theme dots ──
+            // Смена + синк индикаторов (включая эти точки) — njxApplyTheme;
+            // начальное состояние точек восстанавливает njx-site.js
+            bar.querySelectorAll('.bb-dot').forEach(function (d) {
+                d.addEventListener('click', function () {
+                    njxApplyTheme(d.dataset.t);
+                });
+            });
+        }
+
+        if (window._bbInitRegistered) return;
+        window._bbInitRegistered = true;
+        // astro:page-load срабатывает и на первой загрузке, и после каждой VT-навигации
+        document.addEventListener('astro:page-load', initBottombar);
+    })();
+</script>
+
+<style is:global>
+    .bb {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 150;
+        display: flex;
+        justify-content: center;
+        padding: 14px 20px 18px;
+        transform: translateY(120%);
+        transition:
+            transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1),
+            opacity 0.25s;
+        opacity: 0;
+        pointer-events: none;
+    }
+    .bb.visible {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: all;
+    }
+    .bb-inner {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: var(--color-dark-secondary);
+        border: 1px solid
+            color-mix(in srgb, var(--color-neutral-600) 25%, transparent);
+        border-radius: 18px;
+        padding: 6px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    }
+    .bb-sep {
+        width: 1px;
+        height: 22px;
+        background: color-mix(
+            in srgb,
+            var(--color-neutral-600) 25%,
+            transparent
+        );
+        margin: 0 4px;
+        flex-shrink: 0;
+    }
+    /* Nav */
+    .bb-nav {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+    }
+    .bb-nav-btn {
+        position: relative;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-muted);
+        text-decoration: none;
+        transition: all 0.2s;
+        flex-shrink: 0;
+    }
+    .bb-nav-btn:hover {
+        background: color-mix(
+            in srgb,
+            var(--color-neutral-600) 18%,
+            transparent
+        );
+        color: var(--color-light);
+    }
+    .bb-nav-btn.active {
+        background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+        color: var(--color-primary);
+    }
+    .bb-donate {
+        color: #f59e0b;
+    }
+    .bb-donate:hover {
+        background: color-mix(in srgb, #f59e0b 15%, transparent);
+        color: #fbbf24;
+    }
+    .bb-donate.active {
+        background: color-mix(in srgb, #f59e0b 15%, transparent);
+        color: #fbbf24;
+    }
+    /* Тултипы кнопок — [data-tip] из библиотечного _tooltip.css
+       (грузится на всех страницах); свой дубль удалён */
+    /* Theme dots */
+    .bb-themes {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 0 6px 0 2px;
+    }
+    .bb-dot {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.2s;
+        flex-shrink: 0;
+    }
+    .bb-dot:hover {
+        transform: scale(1.2);
+    }
+    .bb-dot.active {
+        /* border-color: var(--color-light); */
+        transform: scale(1.15);
+        box-shadow:
+            0 0 0 2px var(--color-dark-secondary),
+            0 0 0 4px currentColor;
+    }
+    @media (max-width: 720px) {
+        .bb-nav {
+            display: none;
+        }
+        .bb-sep {
+            display: none;
+        }
+        .bb-themes {
+            gap: 4px;
+        }
+    }
+</style>

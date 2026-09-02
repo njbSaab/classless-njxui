@@ -1,0 +1,237 @@
+/* ============================================================
+   site-shared.css — паттерны, повторяющиеся на нескольких страницах.
+   Грузится безусловно из BaseLayout.
+   Сейчас: mode-бар Full/Classless/Interactive (documentation + quickstart).
+   Дельты страниц — в их собственных <style> (sticky/фон/радиус у doc,
+   #qs-mode-bar и заливка табов у quickstart).
+   ============================================================ */
+
+/* ── Алиас токена: в библиотеке (_base.css) переменная называется
+   --сolor-dark с КИРИЛЛИЧЕСКОЙ «с» (историческая опечатка в дистрибутиве).
+   Часть сайтового кода зовёт её латиницей и молча получала unset.
+   Алиас чинит все латинские вызовы; библиотеку не трогаем (правится
+   в следующем релизе njx-ui добавлением такого же алиаса в _base.css). */
+:root,
+[data-theme] {
+  --color-dark: var(--сolor-dark);
+}
+
+/* ── Код-окно .sc-code-* (quickstart + documentation) ──
+   База = значения quickstart; дельты documentation — в его <style>
+   под скоупом .doc-main. Раньше оба определяли эти имена целиком с
+   разными значениями (конфликт при VT-навигации). */
+.sc-code-wrap {
+  background: #0d0d0d;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #222;
+  position: relative;
+}
+.sc-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #111;
+  border-bottom: 1px solid #222;
+}
+.sc-code-dots {
+  display: flex;
+  gap: 6px;
+}
+.sc-code-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.sc-code-filename {
+  font-size: 12px;
+  font-family: 'Roboto Mono', monospace;
+  color: #555;
+}
+.sc-code-copy {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: #222;
+  border: 1px solid #333;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sc-code-copy:hover {
+  background: #333;
+  color: #fff;
+}
+.sc-code-body {
+  padding: 24px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  line-height: 1.8;
+  overflow-x: auto;
+  color: #e0e0e0;
+  white-space: pre;
+}
+
+/* ── Тонкий скроллбар (сайдбары, панель Download-модалки) ── */
+.lib-sidebar::-webkit-scrollbar,
+.doc-sidebar::-webkit-scrollbar,
+.njx-dl-panel::-webkit-scrollbar {
+  width: 4px;
+}
+.lib-sidebar::-webkit-scrollbar-track,
+.doc-sidebar::-webkit-scrollbar-track,
+.njx-dl-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+.lib-sidebar::-webkit-scrollbar-thumb,
+.doc-sidebar::-webkit-scrollbar-thumb,
+.njx-dl-panel::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-neutral-600) 35%, transparent);
+  border-radius: 4px;
+}
+
+/* ── Подсветка синтаксиса, схема «бренд» (com/sh-tag/attr/str) ──
+   Шаги quickstart, qs3-панель, explorer на overview и /demo — раньше
+   4 идентичные копии. Значения одни — источник один. */
+.qs-step .code .com,
+.qs3-code-body .com,
+.ce-code .com {
+  color: #6a6a6a;
+}
+.qs-step .code .sh-tag,
+.qs3-code-body .sh-tag,
+.ce-code .sh-tag {
+  color: var(--color-primary);
+}
+.qs-step .code .attr,
+.qs3-code-body .attr,
+.ce-code .attr {
+  color: var(--color-accent);
+}
+.qs-step .code .str,
+.qs3-code-body .str,
+.ce-code .str {
+  color: #9ce700;
+}
+
+/* ── Палитра .sc-code-body: база — брендовая (quickstart);
+   One-Dark documentation живёт в его <style> под скоупом .doc-main ── */
+.sc-code-body .k {
+  color: var(--color-primary);
+}
+.sc-code-body .t {
+  color: var(--color-accent);
+}
+.sc-code-body .s {
+  color: #9ce700;
+}
+.sc-code-body .c {
+  color: #555;
+  font-style: italic;
+}
+
+.doc-mode-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-neutral-600) 20%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  flex-wrap: wrap;
+}
+.doc-mode-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  flex-shrink: 0;
+}
+.doc-mode-tabs {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+.doc-mode-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-muted);
+  /* без явного background у <button> вступает UA-дефолт buttonface (белый) */
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.doc-mode-tab:hover {
+  color: var(--color-light);
+}
+.doc-mode-tab.active {
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
+  color: var(--color-primary);
+}
+.doc-mode-icon {
+  font-size: 12px;
+  font-weight: 900;
+  font-family: 'Roboto Mono', monospace;
+  opacity: 0.8;
+}
+.doc-mode-default {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: var(--color-primary);
+  color: #000;
+  text-transform: uppercase;
+}
+.doc-mode-size {
+  font-size: 11px;
+  font-family: 'Roboto Mono', monospace;
+  opacity: 0.5;
+}
+.doc-mode-hint {
+  font-size: 12px;
+  color: var(--color-muted);
+  margin-left: auto;
+  white-space: nowrap;
+  opacity: 0.8;
+}
+@media (max-width: 860px) {
+  .doc-mode-hint {
+    display: none;
+  }
+  .doc-mode-bar {
+    padding: 8px 12px;
+  }
+}
+@media (max-width: 540px) {
+  .doc-mode-tab {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  .doc-mode-default {
+    display: none;
+  }
+  .doc-mode-size {
+    display: none;
+  }
+}
+
+/* ── Компактное sc-окно (quickstart steps) ── */
+.sc-code-wrap.is-compact .sc-code-body {
+  padding: 14px 18px;
+  font-size: 12px;
+}

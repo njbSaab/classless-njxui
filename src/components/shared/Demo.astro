@@ -1,0 +1,104 @@
+---
+/**
+ * Demo — один демо-юнит документации: превью + код-окно из ОДНОЙ разметки.
+ *
+ * Канонический вид (is:raw обязателен — сохраняет исходное форматирование
+ * и комментарии, компилятор не переписывает разметку):
+ *
+ *   <Demo is:raw label="Outline">
+ *     <button class="btn btn-outline">Outline</button>
+ *   </Demo>
+ *
+ * Отступления (не больше одного на юнит):
+ *  - code="…"          — показываемый/копируемый код НАМЕРЕННО отличается от превью;
+ *  - previewWrap="article" — тег-обёртка превью (нужна стилям, но не коду);
+ *  - slot="preview"    — превью нуждается в обёртке, которой не место в коде.
+ *    В этом случае is:raw ставится не на Demo, а на Fragment образца:
+ *      <Demo label="…">
+ *        <div slot="preview">…обёртка…</div>
+ *        <Fragment is:raw>…образец…</Fragment>
+ *      </Demo>
+ *
+ * Варианты кода (Alpine-рецепты, roadmap 4.1): слот "alpine" добавляет второй
+ * таб в код-окно («HTML + njx.js» / «Alpine.js»). is:raw на теге Demo сделал бы
+ * именованный слот сырым текстом, поэтому is:raw ставится на внутренние Fragment:
+ *      <Demo label="…">
+ *        <Fragment is:raw>…образец (превью + таб HTML)…</Fragment>
+ *        <Fragment slot="alpine" is:raw>…тот же компонент на x-data…</Fragment>
+ *      </Demo>
+ * Превью всегда рендерится из default-слота (njx.js-вариант) — живого
+ * Alpine-превью нет намеренно, чтобы njx.js и Alpine не конфликтовали.
+ *
+ * Эмитит текущий контракт .lib-component / .lib-preview / .lib-code-wrapper —
+ * runtime-хром (Show code, mac-dots, copy) вешает initCodeToggles из lib-docs.js,
+ * мигрированные юниты неотличимы от старых.
+ */
+import CodeBlock from './CodeBlock.astro';
+import { dedent } from './code-utils.js';
+
+interface Props {
+  label?: string; // .lib-component-label (он же лейбл код-окна в initCodeToggles)
+  code?: string; // override показываемого/копируемого кода
+  lang?: string; // 'html' | 'css' | 'js' (не-html пока без подсветки)
+  filename?: string; // подпись-источник, напр. "_buttons.css"
+  previewClass?: string; // модификаторы .lib-preview: 'col', 'no-dot', …
+  previewStyle?: string; // inline-стиль превью (раскладка демо, не часть образца)
+  previewWrap?: string; // тег-обёртка превью, не попадающая в код (classless: 'article')
+  class?: string;
+}
+
+const {
+  label,
+  code,
+  lang = 'html',
+  filename,
+  previewClass = '',
+  previewStyle,
+  previewWrap,
+  class: className = '',
+} = Astro.props;
+const Wrap = previewWrap;
+
+const raw = dedent(await Astro.slots.render('default')).trim();
+const sample = code != null ? dedent(code).trim() : raw;
+const hasPreviewSlot = Astro.slots.has('preview');
+const alpineSample = Astro.slots.has('alpine')
+  ? dedent(await Astro.slots.render('alpine')).trim()
+  : null;
+const variants = alpineSample
+  ? [
+      { id: 'html', label: 'HTML + njx.js', lang, code: sample },
+      { id: 'alpine', label: 'Alpine.js', lang: 'html', code: alpineSample },
+    ]
+  : undefined;
+// лейбл окна кода — plain text (label может содержать разметку)
+const plainLabel = label
+  ? label
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+  : undefined;
+---
+
+<div class={`lib-component ${className}`.trim()}>
+  {/* set:html — исторически лейблы содержат разметку (<code>…</code>) */}
+  {label && <div class="lib-component-label" set:html={label} />}
+  <div class={`lib-preview ${previewClass}`.trim()} style={previewStyle}>
+    {
+      hasPreviewSlot ? (
+        <slot name="preview" />
+      ) : Wrap ? (
+        <Wrap set:html={raw} />
+      ) : (
+        <Fragment set:html={raw} />
+      )
+    }
+  </div>
+  <CodeBlock
+    code={sample}
+    lang={lang}
+    filename={filename}
+    label={plainLabel}
+    variants={variants}
+  />
+</div>
