@@ -1,0 +1,49 @@
+{
+  "name": "classless-njxui",
+  "version": "1.0.0",
+  "description": "Classless CSS for plain semantic HTML — zero class names, zero dependencies, zero build step. 9 themes via one data-theme attribute, ~7 KB gzip.",
+  "license": "MIT",
+  "author": "njbSaab",
+  "homepage": "https://classless.njxui.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/njbSaab/classless-njxui.git",
+    "directory": "package"
+  },
+  "bugs": {
+    "url": "https://github.com/njbSaab/classless-njxui/issues"
+  },
+  "keywords": [
+    "css",
+    "classless",
+    "classless-css",
+    "no-class",
+    "semantic-html",
+    "themes",
+    "dark-theme",
+    "css-variables",
+    "zero-dependencies",
+    "no-build",
+    "drop-in",
+    "stylesheet",
+    "water-css-alternative",
+    "pico-alternative"
+  ],
+  "style": "classless.min.css",
+  "main": "classless.css",
+  "exports": {
+    ".": "./classless.min.css",
+    "./classless.css": "./classless.css",
+    "./classless.min.css": "./classless.min.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "classless.css",
+    "classless.min.css",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node ../scripts/build-package.cjs"
+  }
+}
