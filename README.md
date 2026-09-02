@@ -1,4 +1,4 @@
-# njX Classless
+# Classless njxui
 
 **njX Classless** (ships in the [`njx-ui`](https://www.npmjs.com/package/njx-ui) npm package) is a classless CSS stylesheet: it styles **plain semantic HTML** — headings, buttons, forms, tables, dialogs, `<details>` — with **zero class names, zero dependencies, zero build step**. 48 KB minified, **~7 KB gzip**, 9 built-in themes.
 
