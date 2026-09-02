@@ -96,7 +96,7 @@ const DOC_ANIM_CARDS = [
 ---
 
 <section class="doc-section" id="animations">
-                <div data-flavor-code="classless" style="display:none">
+                <div>
                     <div class="doc-section-header">
                         <span class="sc-eyebrow">Reference</span>
                         <h2 class="sc-heading">Animations</h2>
@@ -118,33 +118,4 @@ const DOC_ANIM_CARDS = [
                     </div>
                 </div><!-- /classless -->
 
-                <div data-flavor-code="full interactive">
-                    <div class="doc-section-header">
-                        <span class="sc-eyebrow">Reference</span>
-                        <h2 class="sc-heading">Animations</h2>
-                        <p class="sc-subheading">
-                            Built-in CSS animations from <code
-                                >_animations.css</code
-                            >. Just add a class — no JavaScript.
-                        </p>
-                    </div>
-
-                    <div
-                        class="doc-grid doc-grid-auto"
-                        style="margin-bottom:24px"
-                    >
-                        {DOC_ANIM_CARDS.map((c) => (
-                            <div class="doc-card">
-                                <div class="doc-card-title">
-                                    {c.t}{c.note && (
-                                        <span style="font-size:10px;color:var(--color-muted);font-weight:400"> {c.note}</span>
-                                    )}
-                                </div>
-                                <div class="doc-card-mono" set:html={c.lines.join('<br />')} />
-                            </div>
-                        ))}
-                    </div>
-
-                    <CodeBlock frame="sc" lang="html" code={animationsExample} />
-                </div><!-- /full interactive -->
             </section>

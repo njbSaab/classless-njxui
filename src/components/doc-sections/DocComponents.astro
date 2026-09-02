@@ -245,49 +245,9 @@ const DOC_CLASSLESS_CARDS = [
 
 <section class="doc-section" id="components">
                 <!-- ── Full / Interactive: class-based components ── -->
-                <div data-flavor-code="full interactive">
-                    <div class="doc-section-header">
-                        <span class="sc-eyebrow">Reference</span>
-                        <h2 class="sc-heading">Components</h2>
-                        <p class="sc-subheading">
-                            30+ components included. Browse live demos and code
-                            at <a
-                                href="../index.html"
-                                style="color:var(--color-primary)"
-                                >the components page</a
-                            >.
-                        </p>
-                    </div>
-
-                    <div class="doc-grid doc-grid-auto">
-                        {DOC_COMPONENT_CARDS.map((c) => (
-                            <div class="doc-card">
-                                <div class="doc-card-title">
-                                    {c.t}{c.note && (
-                                        <span style="font-size:10px;color:var(--color-muted);font-weight:400"> {c.note}</span>
-                                    )}
-                                </div>
-                                <div class="doc-card-mono" set:html={c.lines.join('<br />')} />
-                            </div>
-                        ))}
-                    </div>
-
-                    <div class="doc-tip" style="margin-top:20px">
-                        <span class="doc-tip-icon">⚡</span>
-                        <div class="doc-tip-text">
-                            Components marked <strong>JS</strong> require <code
-                                >njx.js</code
-                            > for interactivity. Components marked <strong
-                                >native</strong
-                            > use <code>&lt;details&gt;</code>/<code
-                                >&lt;summary&gt;</code
-                            > and work without any JavaScript.
-                        </div>
-                    </div>
-                </div><!-- /full interactive -->
 
                 <!-- ── Classless: styled HTML elements ── -->
-                <div data-flavor-code="classless" style="display:none">
+                <div>
                     <div class="doc-section-header">
                         <span class="sc-eyebrow">Reference</span>
                         <h2 class="sc-heading">Styled Elements</h2>

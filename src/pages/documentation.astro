@@ -5,7 +5,6 @@ import LibsFooter from '../components/LibsFooter.astro';
 import Sidebar from '../components/Sidebar.astro';
 import DocSidebar from '../components/DocSidebar.astro';
 import Bottombar from '../components/Bottombar.astro';
-import { SIZE_FULL, SIZE_CLASSLESS } from '../lib/meta';
 import DocQuickstart from '../components/doc-sections/DocQuickstart.astro';
 import DocThemes from '../components/doc-sections/DocThemes.astro';
 import DocComponents from '../components/doc-sections/DocComponents.astro';
@@ -19,8 +18,8 @@ import DocExamples from '../components/doc-sections/DocExamples.astro';
 ---
 
 <BaseLayout
-    title="Documentation — njX UI · Components, Tokens, JavaScript Reference"
-    description="Full reference for njX UI: design tokens, component classes, JavaScript helpers, themes and classless mode. Everything in one place."
+    title="Documentation — njX Classless · Elements, Themes, Tokens"
+    description="Full reference for njX Classless: styled semantic HTML elements, 9 themes, design tokens and variants. Zero class names."
     withDocsShell={true}
     withDocsScripts={true}
 >
@@ -31,44 +30,6 @@ import DocExamples from '../components/doc-sections/DocExamples.astro';
         <Sidebar><DocSidebar /></Sidebar>
         <!-- ══════════════════════ HERO ══════════════════════ -->
         <main class="doc-main lib-main">
-            <!-- ══════════ STICKY MODE BAR ══════════ -->
-            <div class="doc-mode-bar" id="doc-mode-bar">
-                <span class="doc-mode-label">Mode</span>
-                <div class="doc-mode-tabs">
-                    <button
-                        class="doc-mode-tab active"
-                        data-mode="full"
-                        onclick="pageSyncFlavor('full')"
-                    >
-                        <span class="doc-mode-icon">◈</span>
-                        Full
-                        <span class="doc-mode-default">RECOMMENDED</span>
-                        <span class="doc-mode-size">{SIZE_FULL}</span>
-                    </button>
-                    <button
-                        class="doc-mode-tab"
-                        data-mode="classless"
-                        onclick="pageSyncFlavor('classless')"
-                    >
-                        <span class="doc-mode-icon">&lt;/&gt;</span>
-                        Classless Only
-                        <span class="doc-mode-default">LITE</span>
-                        <span class="doc-mode-size">{SIZE_CLASSLESS}</span>
-                    </button>
-                    <button
-                        class="doc-mode-tab"
-                        data-mode="interactive"
-                        onclick="pageSyncFlavor('interactive')"
-                    >
-                        <span class="doc-mode-icon">JS</span>
-                        Interactive
-                    </button>
-                </div>
-                <span class="doc-mode-hint" id="doc-mode-hint">
-                    Classless built-in — your HTML is styled automatically
-                </span>
-            </div>
-
             <!-- ══════════ QUICK START ══════════ -->
             <DocQuickstart />
 
@@ -1067,25 +1028,6 @@ import DocExamples from '../components/doc-sections/DocExamples.astro';
     // ── FLAVOR SYNC ──
     // Общая механика (табы, hint, show/hide, persist) — njxSyncModeUI
     // из njx-site.js; здесь только страничная специфика (flavor-карточки)
-    function applyFlavor(flavor) {
-        njxSyncModeUI(flavor, {
-            hintId: 'doc-mode-hint',
-            blockAttr: 'data-flavor-code',
-        });
-        document
-            .querySelectorAll('.doc-flavor-card[data-flavor-card]')
-            .forEach(function (c) {
-                c.classList.toggle('active', c.dataset.flavorCard === flavor);
-            });
-    }
-
-    window.pageSyncFlavor = function (flavor) {
-        applyFlavor(flavor);
-    };
-
-    // Init from saved flavor
-    applyFlavor(njxSavedFlavor());
-
     // Восстановление .doc-theme-swatch делает njx-site.js (njxRestoreThemeUI
     // на DOMContentLoaded + astro:page-load) — свой restore-IIFE не нужен
 </script>

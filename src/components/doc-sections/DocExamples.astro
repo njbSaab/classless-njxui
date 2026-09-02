@@ -81,7 +81,7 @@ const exModal = `
 
 <section class="doc-section" id="examples">
                 <!-- ── Classless examples ── -->
-                <div data-flavor-code="classless" style="display:none">
+                <div>
                     <div class="doc-section-header">
                         <span class="sc-eyebrow">Project</span>
                         <h2 class="sc-heading">Examples</h2>
@@ -98,21 +98,4 @@ const exModal = `
                 </div><!-- /classless -->
 
                 <!-- ── Full / Interactive examples ── -->
-                <div data-flavor-code="full interactive">
-                    <div class="doc-section-header">
-                        <span class="sc-eyebrow">Project</span>
-                        <h2 class="sc-heading">Examples</h2>
-                        <p class="sc-subheading">
-                            Common patterns — copy and adapt.
-                        </p>
-                    </div>
-
-                    <div style="display:flex;flex-direction:column;gap:20px">
-                        <CodeBlock frame="sc" lang="html" label="Card with actions" code={exCard} />
-
-                        <CodeBlock frame="sc" lang="html" label="Form with validation states" code={exForm} />
-
-                        <CodeBlock frame="sc" lang="html" label="Modal dialog" code={exModal} />
-                    </div>
-                </div><!-- /full interactive -->
             </section>

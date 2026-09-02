@@ -13,8 +13,8 @@ const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout
-  title="Quick Start — njX UI · One CDN link. Nine themes. Zero build tools."
-  description="One CDN link. Nine themes ready to go. No bundler, no config. CDN in 30 seconds, npm in 60."
+  title="Quick Start — njX Classless · One CDN link. Zero class names."
+  description="njX Classless in 60 seconds: one CDN link, zero class names, nine themes. CDN in 30 seconds, npm in 60."
 >
   <!-- ══ NAV ══ -->
   <PagesTopbar activePage="quickstart" />
@@ -48,133 +48,10 @@ const base = import.meta.env.BASE_URL;
     if (track.dataset.qsInit === '1') return;
     track.dataset.qsInit = '1';
 
-    window._qsCssFile = window._qsCssFile || 'style.min.css';
-    window._qsMode = window._qsMode || 'full';
+    window._qsCssFile = 'classless.min.css';
+    window._qsMode = 'classless'; // режимов нет — сайт целиком classless
 
     var PATHS = {
-      cdn: [
-        {
-          h: 'Drop the link',
-          meta: '~10s',
-          d: "Paste this single &lt;link&gt; into your &lt;head&gt;. That's the whole library.",
-          get code() {
-            return (
-              '&lt;<span class="sh-tag">link</span> <span class="attr">rel</span>=<span class="str">"stylesheet"</span> <span class="attr">href</span>=<span class="str">"https://cdn.jsdelivr.net/npm/njx-ui@1/css/' +
-              window._qsCssFile +
-              '"</span>&gt;'
-            );
-          },
-          check: 'Pasted',
-        },
-        {
-          h: 'Pick a theme',
-          meta: '~5s',
-          d: 'Set <code>data-theme</code> on &lt;html&gt;. 9 options: dark, light, red, blue, green, cyan, yellow, pink, purple.',
-          code: '&lt;<span class="sh-tag">html</span> <span class="attr">lang</span>=<span class="str">"en"</span> <span class="attr">data-theme</span>=<span class="str">"dark"</span>&gt;',
-          check: 'Themed',
-        },
-        {
-          h: 'Use a class',
-          meta: '~10s',
-          d: 'Any <code>.btn</code>, <code>.inp</code>, <code>.tag</code> on the page now styles itself. No imports.',
-          code: '&lt;<span class="sh-tag">button</span> <span class="attr">class</span>=<span class="str">"btn btn-primary"</span>&gt;Ship it&lt;/<span class="sh-tag">button</span>&gt;\n&lt;<span class="sh-tag">input</span>  <span class="attr">class</span>=<span class="str">"inp inp-primary"</span> <span class="attr">placeholder</span>=<span class="str">"email"</span>&gt;\n&lt;<span class="sh-tag">span</span>   <span class="attr">class</span>=<span class="str">"tag tag-success"</span>&gt;live&lt;/<span class="sh-tag">span</span>&gt;',
-          check: 'Used',
-        },
-        {
-          h: 'Customize a token',
-          meta: '~5s',
-          d: 'Override one variable to brand your build. Everything that uses <code>--color-primary</code> retints.',
-          code: '&lt;<span class="sh-tag">style</span>&gt;\n  <span class="sh-tag">:root</span> &#123; <span class="attr">--color-primary</span>: <span class="str">#ff6b35</span>; &#125;\n&lt;/<span class="sh-tag">style</span>&gt;',
-          check: 'Branded',
-        },
-      ],
-      npm: [
-        {
-          h: 'Install package',
-          meta: '~30s',
-          d: 'Add the package. Works with npm, pnpm, yarn or bun.',
-          code: '<span class="com"># pick your manager</span>\nnpm  install njx-ui\npnpm add     njx-ui\nbun  add     njx-ui',
-          check: 'Installed',
-        },
-        {
-          h: 'Import CSS',
-          meta: '~5s',
-          d: 'Pull the stylesheet into your entry file. Vite, webpack, esbuild — all fine.',
-          get code() {
-            return (
-              '<span class="com">// src/main.ts (or main.js)</span>\n<span class="sh-tag">import</span> <span class="str">"njx-ui/css/' +
-              window._qsCssFile +
-              '"</span>;'
-            );
-          },
-          check: 'Imported',
-        },
-        {
-          h: 'Set theme attribute',
-          meta: '~5s',
-          d: 'Set on &lt;html&gt; for the whole app, or any wrapper for a scoped theme.',
-          code: '<span class="com">&lt;!-- index.html --&gt;</span>\n&lt;<span class="sh-tag">html</span> <span class="attr">data-theme</span>=<span class="str">"dark"</span>&gt;',
-          check: 'Themed',
-        },
-        {
-          h: 'Use in a component',
-          meta: '~10s',
-          d: 'Apply utility classes anywhere. React, Vue, Svelte — same string.',
-          code: '<span class="sh-tag">export</span> <span class="sh-tag">function</span> <span class="attr">Login</span>() &#123;\n  <span class="sh-tag">return</span> (\n    &lt;<span class="sh-tag">form</span> <span class="attr">className</span>=<span class="str">"card"</span>&gt;\n      &lt;<span class="sh-tag">input</span> <span class="attr">className</span>=<span class="str">"inp inp-primary"</span> /&gt;\n      &lt;<span class="sh-tag">button</span> <span class="attr">className</span>=<span class="str">"btn btn-primary"</span>&gt;Sign in&lt;/<span class="sh-tag">button</span>&gt;\n    &lt;/<span class="sh-tag">form</span>&gt;\n  );\n&#125;',
-          check: 'Used',
-        },
-      ],
-      zip: [
-        {
-          h: 'Download source ZIP',
-          meta: '~20s',
-          d: 'Grab the latest source ZIP from GitHub (main branch).',
-          dl: 'https://github.com/njbSaab/njx-css-ui/archive/refs/heads/main.zip',
-          check: 'Downloaded',
-        },
-        {
-          h: 'Copy into project',
-          meta: '~10s',
-          get d() {
-            return (
-              'Drop the <code>' +
-              window._qsCssFile +
-              '</code> file anywhere your server can serve it from.'
-            );
-          },
-          get code() {
-            return (
-              '<span class="com"># tree</span>\nyour-project/\n&#x251C;&#x2500; index.html\n&#x2514;&#x2500; vendor/\n   &#x2514;&#x2500; njx-css-ui/\n      &#x2514;&#x2500; ' +
-              window._qsCssFile
-            );
-          },
-          check: 'Copied',
-        },
-        {
-          h: 'Link the file',
-          meta: '~10s',
-          d: 'Reference it from your &lt;head&gt;. Relative path is fine.',
-          get code() {
-            return (
-              '&lt;<span class="sh-tag">link</span> <span class="attr">rel</span>=<span class="str">"stylesheet"</span>\n      <span class="attr">href</span>=<span class="str">"./vendor/njx-css-ui/' +
-              window._qsCssFile +
-              '"</span>&gt;\n&lt;<span class="sh-tag">html</span> <span class="attr">data-theme</span>=<span class="str">"dark"</span>&gt;'
-            );
-          },
-          check: 'Linked',
-        },
-        {
-          h: 'Use the classes',
-          meta: '~10s',
-          d: 'Same classes as the CDN path. No build, no bundler — just HTML.',
-          code: '&lt;<span class="sh-tag">button</span> <span class="attr">class</span>=<span class="str">"btn btn-primary"</span>&gt;Ship it&lt;/<span class="sh-tag">button</span>&gt;',
-          check: 'Used',
-        },
-      ],
-    };
-
-    // Classless-specific path steps
-    var CLASSLESS_PATHS = {
       cdn: [
         {
           h: 'Drop the link',
@@ -252,8 +129,7 @@ const base = import.meta.env.BASE_URL;
     var done = {};
 
     function render() {
-      var activePaths =
-        window._qsMode === 'classless' ? CLASSLESS_PATHS : PATHS;
+      var activePaths = PATHS;
       var steps = activePaths[curP] || activePaths['cdn'];
       track.innerHTML = '';
       steps.forEach(function (st, i) {
@@ -311,8 +187,7 @@ const base = import.meta.env.BASE_URL;
     }
 
     function updateProgress() {
-      var activePaths =
-        window._qsMode === 'classless' ? CLASSLESS_PATHS : PATHS;
+      var activePaths = PATHS;
       var steps = activePaths[curP] || activePaths['cdn'];
       var completed = steps.reduce(function (n, _, i) {
         return n + (done[curP + '-' + i] ? 1 : 0);
@@ -353,7 +228,6 @@ const base = import.meta.env.BASE_URL;
       done = {};
       render();
     };
-    window._qsClasslessPaths = CLASSLESS_PATHS;
   }
 
   function initQs3Pane() {
@@ -727,51 +601,4 @@ createApp(App).mount(<span class="str">"#app"</span>);`,
   qsInitAll();
   document.addEventListener('astro:page-load', qsInitAll);
 
-  // ══════════════════════ MODE BAR ══════════════════════
-  // Общая механика (табы, hint, show/hide, persist) — njxSyncModeUI из
-  // njx-site.js; ниже только специфика quickstart (рендер трека/кода)
-  var QS_CSS_FILE = {
-    full: 'style.min.css',
-    classless: 'classless.min.css',
-    interactive: 'style.min.css',
-  };
-
-  function qsSyncMode(flavor) {
-    njxSyncModeUI(flavor, {
-      tabSel: '#qs-mode-bar .doc-mode-tab',
-      hintId: 'qs-mode-hint',
-      blockAttr: 'data-qs-mode',
-    });
-
-    // Global mode + css file vars (used by PATHS getters and render hooks)
-    window._qsMode = flavor;
-    window._qsCssFile = QS_CSS_FILE[flavor] || 'style.min.css';
-
-    // Code transformation hook (used by renderTab)
-    var _cssFile = window._qsCssFile;
-    window._qsApplyModeToCode = function (el) {
-      if (!el) return;
-      el.innerHTML = el.innerHTML.replace(/style\.min\.css/g, _cssFile);
-    };
-
-    // Re-render the progress tracker + code card
-    if (window._qsRender) window._qsRender();
-    if (window._qsRenderTab) window._qsRenderTab();
-
-    // Static data-qs-cssfile spans
-    document.querySelectorAll('[data-qs-cssfile]').forEach(function (el) {
-      el.textContent = window._qsCssFile;
-    });
-
-    // JS step (interactive only)
-    document.querySelectorAll('[data-qs-jsonly]').forEach(function (el) {
-      el.style.display = flavor === 'interactive' ? '' : 'none';
-    });
-  }
-
-  // Init from saved flavor (общий ключ с documentation)
-  if (njxSavedFlavor() !== 'full') qsSyncMode(njxSavedFlavor());
-  document.addEventListener('astro:page-load', function () {
-    qsSyncMode(njxSavedFlavor());
-  });
 </script>

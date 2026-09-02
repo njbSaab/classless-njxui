@@ -11,25 +11,9 @@ const base = import.meta.env.BASE_URL;
         <div class="qs3-n" data-n="1">Install</div>
         <h2>One line in your <span class="qs3-em">&lt;head&gt;</span>.</h2>
 
-        <!-- Full / Interactive description -->
-        <div data-qs-mode="full interactive">
+        <div>
           <p>
-            njX UI is a single CSS file. Link it from a CDN, install via npm, or
-            grab the ZIP. The rest of this page assumes the CDN path since it's
-            the fastest.
-          </p>
-          <p>
-            After the &lt;link&gt; loads you instantly have every <code
-              >.btn</code
-            >, <code>.inp</code>, <code>.tag</code>, <code>.card</code>, <code
-              >.tip</code
-            > and 20+ more classes available. No build. No bundler.
-          </p>
-        </div>
-        <!-- Classless description -->
-        <div data-qs-mode="classless" style="display:none">
-          <p>
-            <code>classless.min.css</code> — 47 KB, standalone. One link tag is all
+            <code>classless.min.css</code> — 48 KB (~7 KB gzip), standalone. One link tag is all
             you need. No class names, no build step, no bundler.
           </p>
           <p>
@@ -41,8 +25,8 @@ const base = import.meta.env.BASE_URL;
 
         <div class="qs3-tip">
           <div>
-            <b>Tip</b><br />The CDN is cached on jsdelivr — 293&nbsp;KB on disk,
-            ~40&nbsp;KB over the wire (gzip). Subsequent visitors hit your CDN
+            <b>Tip</b><br />The CDN is cached on jsdelivr — 48&nbsp;KB on disk,
+            ~7&nbsp;KB over the wire (gzip). Subsequent visitors hit your CDN
             cache or theirs.
           </div>
         </div>
@@ -78,46 +62,8 @@ const base = import.meta.env.BASE_URL;
       </section>
 
       <section class="qs3-block" id="qs3-b3">
-        <!-- Full / Interactive: class composition -->
-        <div data-qs-mode="full interactive">
-          <div class="qs3-n" data-n="3">Compose</div>
-          <h2>Stack classes like <span class="qs3-em">Lego</span>.</h2>
-          <p>
-            Every class is additive. Mix a <code>.btn</code> with <code
-              >.btn-primary</code
-            > for color, <code>.btn-sm</code> for size, and <code
-              >.hover-glow</code
-            > for the hover — all on one element.
-          </p>
-          <p>
-            Same pattern for cards, inputs, tags, progress. There's no component
-            "instance" to instantiate and no config file to edit — if you can
-            write HTML, you're styling njX UI.
-          </p>
-          <ul>
-            <li>
-              <strong>Color</strong><code>.btn-primary</code>, <code
-                >.btn-accent</code
-              >, <code>.btn-success</code>, <code>.btn-error</code>, <code
-                >.btn-ghost</code
-              >, <code>.btn-outline</code>
-            </li>
-            <li>
-              <strong>Size</strong><code>.btn-xs</code>, <code>.btn-sm</code>, <code
-                >.btn-lg</code
-              >, <code>.btn-xl</code>
-            </li>
-            <li>
-              <strong>Hover</strong><code>.hover-grow</code>, <code
-                >.hover-lift</code
-              >, <code>.hover-glow</code>, <code>.hover-shimmer</code>, and 25
-              more
-            </li>
-          </ul>
-        </div>
 
-        <!-- Classless: elements reference -->
-        <div data-qs-mode="classless" style="display:none">
+        <div>
           <div class="qs3-n" data-n="3">Elements</div>
           <h2>Write HTML. <span class="qs3-em">It just works.</span></h2>
           <p>
@@ -150,10 +96,11 @@ const base = import.meta.env.BASE_URL;
           </ul>
           <div class="qs3-tip">
             <div>
-              <b>Want component classes?</b><br />Switch to <strong>Full</strong
-              > mode (<code>style.min.css</code>) — 30+ component classes plus
-              utilities. Use one stylesheet at a time: Full <em>or</em> Classless,
-              they are standalone builds.
+              <b>Want component classes?</b><br />The full njX UI library —
+              30+ component classes plus utilities — lives at
+              <a href="https://njxui.dev" style="color:var(--color-primary)"
+                >njxui.dev</a
+              >. Use one stylesheet at a time: the builds are standalone.
             </div>
           </div>
         </div>

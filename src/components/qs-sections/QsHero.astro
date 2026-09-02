@@ -1,5 +1,4 @@
 ---
-import { SIZE_CLASSLESS, SIZE_FULL } from '../../lib/meta';
 const base = import.meta.env.BASE_URL;
 
 ---
@@ -11,47 +10,9 @@ const base = import.meta.env.BASE_URL;
       <span class="qs-grad">Up and running</span><br />before your coffee.
     </h1>
     <p class="qs-sub">
-      One CDN link. Nine themes ready to go. No bundler, no config.
+      One CDN link. Zero class names. Nine themes ready to go.
     </p>
   </section>
-
-  <!-- ══════════════════════ MODE BAR ══════════════════════ -->
-  <div class="doc-mode-bar" id="qs-mode-bar">
-    <span class="doc-mode-label">Mode</span>
-    <div class="doc-mode-tabs">
-      <button
-        class="doc-mode-tab active"
-        data-mode="full"
-        onclick="qsSyncMode('full')"
-      >
-        <span class="doc-mode-icon">◈</span>
-        njX UI Full
-        <span class="doc-mode-default">RECOMMENDED</span>
-        <span class="doc-mode-size">{SIZE_FULL}</span>
-      </button>
-      <button
-        class="doc-mode-tab"
-        data-mode="classless"
-        onclick="qsSyncMode('classless')"
-      >
-        <span class="doc-mode-icon">&lt;/&gt;</span>
-        Classless Only
-        <span class="doc-mode-default">LITE</span>
-        <span class="doc-mode-size">{SIZE_CLASSLESS}</span>
-      </button>
-      <button
-        class="doc-mode-tab"
-        data-mode="interactive"
-        onclick="qsSyncMode('interactive')"
-      >
-        <span class="doc-mode-icon">JS</span>
-        Interactive
-      </button>
-    </div>
-    <span class="doc-mode-hint" id="qs-mode-hint"
-      >Classless built-in — your HTML is styled automatically</span
-    >
-  </div>
 
   <!-- ══════════════════════ PATH SELECTOR ══════════════════════ -->
   <div class="qs-paths">
@@ -88,12 +49,13 @@ const base = import.meta.env.BASE_URL;
       <div class="qs-success-em">🎉</div>
       <h3>You're shipping njX UI.</h3>
       <p>
-        Every <code>.btn</code>, <code>.tag</code>, <code>.card</code> on your page
-        now responds to <code>data-theme</code>. Want more?
+        Every <code>&lt;button&gt;</code>, <code>&lt;input&gt;</code>,
+        <code>&lt;table&gt;</code> on your page is styled and responds to
+        <code>data-theme</code>. Want more?
       </p>
       <div class="qs-success-ctas">
         <a class="qs-b qs-b-p" href={`${base}overview`}
-          >Browse 30+ components →</a
+          >Browse all elements →</a
         >
         <a
           class="qs-b qs-b-g"
