@@ -1,3 +1,39 @@
+---
+import Demo from '../shared/Demo.astro';
+
+const ctaCardPairCode = `
+<article>
+  <span>Open source CSS</span>
+  <h3>Build docs and prototypes with zero component classes.</h3>
+  <p>Drop in classless.css and write semantic HTML.</p>
+  <p>
+    <a href="https://njxui.dev">Explore docs</a>
+    <a href="https://github.com/njbSaab/njx-css-ui">GitHub</a>
+  </p>
+</article>
+`;
+
+const featureCardsCode = `
+<article>
+  <h3>No classes required</h3>
+  <p>Native elements get sensible defaults.</p>
+  <a href="https://njxui.dev">Open docs</a>
+</article>
+`;
+
+const pricingCardsCode = `
+<article>
+  <h3>Classless</h3>
+  <p>$0 / MIT</p>
+  <ul>
+    <li>Semantic HTML styling</li>
+    <li>9 themes</li>
+  </ul>
+  <button data-variant="primary">Use CDN</button>
+</article>
+`;
+---
+
 <section class="lib-section cl-section" id="ready-cards">
     <div class="lib-section-title">▣ Ready Cards</div>
     <div class="lib-section-desc">
@@ -5,9 +41,7 @@
         headings, lists and buttons. Useful for docs, landing pages and internal tools.
     </div>
 
-    <div class="lib-component">
-        <div class="lib-component-label">CTA card pair</div>
-        <div class="lib-preview">
+    <Demo is:raw label={'CTA card pair'} code={ctaCardPairCode}>
             <article class="cl-art-preview">
                 <div class="cl-art-grid">
                     <article class="cl-ready-card cl-ready-card-primary">
@@ -37,32 +71,9 @@
                     </article>
                 </div>
             </article>
-        </div>
-        <div class="lib-code-wrapper">
-            <div class="lib-code-container">
-                <div class="lib-code" data-raw='<article>
-  <span>Open source CSS</span>
-  <h3>Build docs and prototypes with zero component classes.</h3>
-  <p>Drop in classless.css and write semantic HTML.</p>
-  <p>
-    <a href="https://njxui.dev">Explore docs</a>
-    <a href="https://github.com/njbSaab/njx-css-ui">GitHub</a>
-  </p>
-</article>'>
-                    <span class="k">&lt;article&gt;</span><br />
-                    &nbsp;&nbsp;<span class="k">&lt;span&gt;</span><span class="t">Open source CSS</span><span class="k">&lt;/span&gt;</span><br />
-                    &nbsp;&nbsp;<span class="k">&lt;h3&gt;</span><span class="t">Build docs and prototypes...</span><span class="k">&lt;/h3&gt;</span><br />
-                    &nbsp;&nbsp;<span class="k">&lt;p&gt;</span><span class="t">Drop in classless.css and write semantic HTML.</span><span class="k">&lt;/p&gt;</span><br />
-                    &nbsp;&nbsp;<span class="k">&lt;p&gt;</span><span class="k">&lt;a</span> <span class="s">href</span>=<span class="cn">"https://njxui.dev"</span><span class="k">&gt;</span><span class="t">Explore docs</span><span class="k">&lt;/a&gt;&lt;/p&gt;</span><br />
-                    <span class="k">&lt;/article&gt;</span>
-                </div>
-            </div>
-        </div>
-    </div>
+        </Demo>
 
-    <div class="lib-component">
-        <div class="lib-component-label">Feature cards</div>
-        <div class="lib-preview">
+    <Demo is:raw label={'Feature cards'} code={featureCardsCode}>
             <article class="cl-art-preview">
                 <div class="cl-feature-grid">
                     <article class="cl-feature-card">
@@ -85,27 +96,9 @@
                     </article>
                 </div>
             </article>
-        </div>
-        <div class="lib-code-wrapper">
-            <div class="lib-code-container">
-                <div class="lib-code" data-raw='<article>
-  <h3>No classes required</h3>
-  <p>Native elements get sensible defaults.</p>
-  <a href="https://njxui.dev">Open docs</a>
-</article>'>
-                    <span class="k">&lt;article&gt;</span><br />
-                    &nbsp;&nbsp;<span class="k">&lt;h3&gt;</span><span class="t">No classes required</span><span class="k">&lt;/h3&gt;</span><br />
-                    &nbsp;&nbsp;<span class="k">&lt;p&gt;</span><span class="t">Native elements get sensible defaults.</span><span class="k">&lt;/p&gt;</span><br />
-                    &nbsp;&nbsp;<span class="k">&lt;a</span> <span class="s">href</span>=<span class="cn">"https://njxui.dev"</span><span class="k">&gt;</span><span class="t">Open docs</span><span class="k">&lt;/a&gt;</span><br />
-                    <span class="k">&lt;/article&gt;</span>
-                </div>
-            </div>
-        </div>
-    </div>
+        </Demo>
 
-    <div class="lib-component">
-        <div class="lib-component-label">Pricing cards</div>
-        <div class="lib-preview">
+    <Demo is:raw label={'Pricing cards'} code={pricingCardsCode}>
             <article class="cl-art-preview">
                 <div class="cl-pricing-grid">
                     <article class="cl-pricing-card">
@@ -140,31 +133,10 @@
                     </article>
                 </div>
             </article>
-        </div>
-        <div class="lib-code-wrapper">
-            <div class="lib-code-container">
-                <div class="lib-code" data-raw='<article>
-  <h3>Classless</h3>
-  <p>$0 / MIT</p>
-  <ul>
-    <li>Semantic HTML styling</li>
-    <li>9 themes</li>
-  </ul>
-  <button data-variant="primary">Use CDN</button>
-</article>'>
-                    <span class="k">&lt;article&gt;</span><br />
-                    &nbsp;&nbsp;<span class="k">&lt;h3&gt;</span><span class="t">Classless</span><span class="k">&lt;/h3&gt;</span><br />
-                    &nbsp;&nbsp;<span class="k">&lt;p&gt;</span><span class="t">$0 / MIT</span><span class="k">&lt;/p&gt;</span><br />
-                    &nbsp;&nbsp;<span class="k">&lt;ul&gt;</span><span class="t">...</span><span class="k">&lt;/ul&gt;</span><br />
-                    &nbsp;&nbsp;<span class="k">&lt;button</span> <span class="s">data-variant</span>=<span class="cn">"primary"</span><span class="k">&gt;</span><span class="t">Use CDN</span><span class="k">&lt;/button&gt;</span><br />
-                    <span class="k">&lt;/article&gt;</span>
-                </div>
-            </div>
-        </div>
-    </div>
+        </Demo>
 </section>
 
-<style>
+<style is:global>
     .cl-art-preview {
         display: block !important;
         width: 100%;

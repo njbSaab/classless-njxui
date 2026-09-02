@@ -1,12 +1,26 @@
+---
+import Demo from '../shared/Demo.astro';
+
+const themeSwitcherCode = `
+<html data-theme="dark">
+<html data-theme="light">
+<html data-theme="red">
+<html data-theme="blue">
+<html data-theme="green">
+<html data-theme="cyan">
+<html data-theme="yellow">
+<html data-theme="pink">
+<html data-theme="purple">
+`;
+---
+
 <section class="lib-section cl-section" id="themes">
     <div class="lib-section-title">🎨 Themes</div>
     <div class="lib-section-desc">
         9 built-in themes via <code>data-theme</code> on <code>&lt;html&gt;</code>. Click a card to switch the entire page theme.
     </div>
 
-    <div class="lib-component">
-        <div class="lib-component-label">Theme switcher</div>
-        <div class="lib-preview">
+    <Demo is:raw label={'Theme switcher'} code={themeSwitcherCode}>
             <div class="themes-grid">
                 <div class="theme-card" data-theme="dark" style="background:#0a0a0a;border-color:#14a0ff33;color:#fff;">
                     <div class="theme-card-name" style="color:#14a0ff">dark</div>
@@ -99,30 +113,5 @@
                     <div class="theme-card-label">data-theme="purple"</div>
                 </div>
             </div>
-        </div>
-        <div class="lib-code-wrapper">
-            <div class="lib-code-container">
-                <div class="lib-code" data-raw='<html data-theme="dark">
-<html data-theme="light">
-<html data-theme="red">
-<html data-theme="blue">
-<html data-theme="green">
-<html data-theme="cyan">
-<html data-theme="yellow">
-<html data-theme="pink">
-<html data-theme="purple">'>
-                    <span class="c">&lt;!-- Set on &lt;html&gt; --&gt;</span><br />
-                    <span class="k">&lt;html</span> <span class="s">data-theme</span>=<span class="cn">"dark"</span><span class="k">&gt;</span><br />
-                    <span class="k">&lt;html</span> <span class="s">data-theme</span>=<span class="cn">"light"</span><span class="k">&gt;</span><br />
-                    <span class="k">&lt;html</span> <span class="s">data-theme</span>=<span class="cn">"red"</span><span class="k">&gt;</span><br />
-                    <span class="k">&lt;html</span> <span class="s">data-theme</span>=<span class="cn">"blue"</span><span class="k">&gt;</span><br />
-                    <span class="k">&lt;html</span> <span class="s">data-theme</span>=<span class="cn">"green"</span><span class="k">&gt;</span><br />
-                    <span class="k">&lt;html</span> <span class="s">data-theme</span>=<span class="cn">"cyan"</span><span class="k">&gt;</span><br />
-                    <span class="k">&lt;html</span> <span class="s">data-theme</span>=<span class="cn">"yellow"</span><span class="k">&gt;</span><br />
-                    <span class="k">&lt;html</span> <span class="s">data-theme</span>=<span class="cn">"pink"</span><span class="k">&gt;</span><br />
-                    <span class="k">&lt;html</span> <span class="s">data-theme</span>=<span class="cn">"purple"</span><span class="k">&gt;</span>
-                </div>
-            </div>
-        </div>
-    </div>
+        </Demo>
 </section>

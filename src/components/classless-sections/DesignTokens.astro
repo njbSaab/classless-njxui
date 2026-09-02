@@ -1,3 +1,58 @@
+---
+import Demo from '../shared/Demo.astro';
+
+const semanticColorsCode = `
+--color-primary
+--color-accent
+--color-success
+--color-error
+--color-warning
+--color-muted
+--color-light
+--color-dark-secondary
+`;
+
+const primaryScaleCode = `
+--color-primary-100 … --color-primary-900
+`;
+
+const neutralScaleCode = `
+--color-neutral-50 … --color-neutral-900
+`;
+
+const fontFamiliesCode = `
+--font-sans:    var(--font-inter)
+--font-heading: var(--font-poppins)
+--font-mono:    var(--font-roboto-mono)
+`;
+
+const fontSizesCode = `
+--fs-xs: 12px  --fs-sm: 14px  --fs-base: 16px
+--fs-lg: 18px  --fs-xl: 20px  --fs-2xl: 24px
+--fs-3xl: 30px  --fs-4xl: 36px  --fs-5xl: 48px
+--fs-hero: 96px  (+ fluid: --fs-f-base, --fs-f-xl…)
+`;
+
+const spacingScaleCode = `
+--space-1: 4px   --space-2: 8px   --space-3: 12px
+--space-4: 16px  --space-6: 24px  --space-8: 32px
+--space-10: 40px --space-12: 48px --space-16: 64px
+--space-20: 80px --space-24: 96px
+`;
+
+const borderRadiusCode = `
+--radius-none: 0px    --radius-sm: 6px
+--radius-md: 12px     --radius-lg: 20px
+--radius-xl: 30px     --radius-2xl: 40px
+--radius-full: 9999px
+`;
+
+const shadowsCode = `
+--shadow-sm      --shadow-md      --shadow-lg
+--shadow-primary --shadow-accent  --shadow-glow
+`;
+---
+
 <style is:global>
     /* ── Design Tokens section ── */
     .tok-group {
@@ -229,9 +284,7 @@
     </div>
 
     <!-- ── Semantic colors ── -->
-    <div class="lib-component">
-        <div class="lib-component-label">Semantic colors</div>
-        <div class="lib-preview">
+    <Demo is:raw label={'Semantic colors'} code={semanticColorsCode}>
             <div class="tok-colors">
                 <div class="tok-swatch" style="background:var(--color-primary)">
                     <div class="tok-swatch-name">primary</div>
@@ -282,37 +335,10 @@
                     <div class="tok-swatch-var">--color-dark-secondary</div>
                 </div>
             </div>
-        </div>
-        <div class="lib-code-wrapper">
-            <div class="lib-code-container">
-                <div
-                    class="lib-code"
-                    data-raw="--color-primary
---color-accent
---color-success
---color-error
---color-warning
---color-muted
---color-light
---color-dark-secondary"
-                >
-                    <span class="s">--color-primary</span><br />
-                    <span class="s">--color-accent</span><br />
-                    <span class="s">--color-success</span><br />
-                    <span class="s">--color-error</span><br />
-                    <span class="s">--color-warning</span><br />
-                    <span class="s">--color-muted</span><br />
-                    <span class="s">--color-light</span><br />
-                    <span class="s">--color-dark-secondary</span>
-                </div>
-            </div>
-        </div>
-    </div>
+        </Demo>
 
     <!-- ── Primary scale ── -->
-    <div class="lib-component">
-        <div class="lib-component-label">Primary scale</div>
-        <div class="lib-preview">
+    <Demo is:raw label={'Primary scale'} code={primaryScaleCode}>
             <div class="tok-scale" style="width: 100%;">
                 <div
                     class="tok-scale-step"
@@ -378,25 +404,10 @@
                     900
                 </div>
             </div>
-        </div>
-        <div class="lib-code-wrapper">
-            <div class="lib-code-container">
-                <div
-                    class="lib-code"
-                    data-raw="--color-primary-100 … --color-primary-900"
-                >
-                    <span class="s">--color-primary-100</span> … <span class="s"
-                        >--color-primary-900</span
-                    >
-                </div>
-            </div>
-        </div>
-    </div>
+        </Demo>
 
     <!-- ── Neutral scale ── -->
-    <div class="lib-component">
-        <div class="lib-component-label">Neutral scale</div>
-        <div class="lib-preview">
+    <Demo is:raw label={'Neutral scale'} code={neutralScaleCode}>
             <div class="tok-scale" style="width: 100%;">
                 <div
                     class="tok-scale-step dark"
@@ -469,25 +480,10 @@
                     900
                 </div>
             </div>
-        </div>
-        <div class="lib-code-wrapper">
-            <div class="lib-code-container">
-                <div
-                    class="lib-code"
-                    data-raw="--color-neutral-50 … --color-neutral-900"
-                >
-                    <span class="s">--color-neutral-50</span> … <span class="s"
-                        >--color-neutral-900</span
-                    >
-                </div>
-            </div>
-        </div>
-    </div>
+        </Demo>
 
     <!-- ── Font families ── -->
-    <div class="lib-component">
-        <div class="lib-component-label">Font families</div>
-        <div class="lib-preview">
+    <Demo is:raw label={'Font families'} code={fontFamiliesCode}>
             <div class="tok-fonts" style="width: 100%;">
                 <div class="tok-font-card">
                     <div
@@ -547,33 +543,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="lib-code-wrapper">
-            <div class="lib-code-container">
-                <div
-                    class="lib-code"
-                    data-raw="--font-sans:    var(--font-inter)
---font-heading: var(--font-poppins)
---font-mono:    var(--font-roboto-mono)"
-                >
-                    <span class="s">--font-sans</span>: <span class="cn"
-                        >var(--font-inter)</span
-                    ><br />
-                    <span class="s">--font-heading</span>: <span class="cn"
-                        >var(--font-poppins)</span
-                    ><br />
-                    <span class="s">--font-mono</span>: <span class="cn"
-                        >var(--font-roboto-mono)</span
-                    >
-                </div>
-            </div>
-        </div>
-    </div>
+        </Demo>
 
     <!-- ── Font sizes ── -->
-    <div class="lib-component">
-        <div class="lib-component-label">Font sizes</div>
-        <div class="lib-preview">
+    <Demo is:raw label={'Font sizes'} code={fontSizesCode}>
             <div class="tok-sizes" style="width: 100%;">
                 <div class="tok-size-row">
                     <div class="tok-size-label">--fs-xs</div>
@@ -652,45 +625,10 @@
                     <div class="tok-size-px">96px</div>
                 </div>
             </div>
-        </div>
-        <div class="lib-code-wrapper">
-            <div class="lib-code-container">
-                <div
-                    class="lib-code"
-                    data-raw="--fs-xs: 12px  --fs-sm: 14px  --fs-base: 16px
---fs-lg: 18px  --fs-xl: 20px  --fs-2xl: 24px
---fs-3xl: 30px  --fs-4xl: 36px  --fs-5xl: 48px
---fs-hero: 96px  (+ fluid: --fs-f-base, --fs-f-xl…)"
-                >
-                    <span class="s">--fs-xs</span>: <span class="cn">12px</span> &nbsp;
-                    <span class="s">--fs-sm</span>: <span class="cn">14px</span> &nbsp;
-                    <span class="s">--fs-base</span>: <span class="cn"
-                        >16px</span
-                    ><br />
-                    <span class="s">--fs-lg</span>: <span class="cn">18px</span> &nbsp;
-                    <span class="s">--fs-xl</span>: <span class="cn">20px</span> &nbsp;
-                    <span class="s">--fs-2xl</span>: <span class="cn">24px</span
-                    ><br />
-                    <span class="s">--fs-3xl</span>: <span class="cn">30px</span
-                    > &nbsp; <span class="s">--fs-4xl</span>: <span class="cn"
-                        >36px</span
-                    > &nbsp; <span class="s">--fs-5xl</span>: <span class="cn"
-                        >48px</span
-                    ><br />
-                    <span class="s">--fs-hero</span>: <span class="cn"
-                        >96px</span
-                    > &nbsp; <span class="c"
-                        >(+ fluid: --fs-f-base, --fs-f-xl…)</span
-                    >
-                </div>
-            </div>
-        </div>
-    </div>
+        </Demo>
 
     <!-- ── Spacing ── -->
-    <div class="lib-component">
-        <div class="lib-component-label">Spacing scale</div>
-        <div class="lib-preview">
+    <Demo is:raw label={'Spacing scale'} code={spacingScaleCode}>
             <div class="tok-spacing" style="width: 100%;">
                 <div class="tok-space-row">
                     <div class="tok-size-label">--space-1</div><div
@@ -777,45 +715,10 @@
                     </div><div class="tok-space-val">96px</div>
                 </div>
             </div>
-        </div>
-        <div class="lib-code-wrapper">
-            <div class="lib-code-container">
-                <div
-                    class="lib-code"
-                    data-raw="--space-1: 4px   --space-2: 8px   --space-3: 12px
---space-4: 16px  --space-6: 24px  --space-8: 32px
---space-10: 40px --space-12: 48px --space-16: 64px
---space-20: 80px --space-24: 96px"
-                >
-                    <span class="s">--space-1</span>: <span class="cn">4px</span
-                    > &nbsp; <span class="s">--space-2</span>: <span class="cn"
-                        >8px</span
-                    > &nbsp; <span class="s">--space-3</span>: <span class="cn"
-                        >12px</span
-                    ><br />
-                    <span class="s">--space-4</span>: <span class="cn"
-                        >16px</span
-                    > &nbsp; <span class="s">--space-6</span>: <span class="cn"
-                        >24px</span
-                    > &nbsp; <span class="s">--space-8</span>: <span class="cn"
-                        >32px</span
-                    ><br />
-                    <span class="s">--space-10</span>: <span class="cn"
-                        >40px</span
-                    > &nbsp; <span class="s">--space-12</span>: <span class="cn"
-                        >48px</span
-                    > &nbsp; <span class="s">--space-16</span>: <span class="cn"
-                        >64px</span
-                    >
-                </div>
-            </div>
-        </div>
-    </div>
+        </Demo>
 
     <!-- ── Border radius ── -->
-    <div class="lib-component">
-        <div class="lib-component-label">Border radius</div>
-        <div class="lib-preview">
+    <Demo is:raw label={'Border radius'} code={borderRadiusCode}>
             <div class="tok-radii">
                 <div class="tok-radius-item">
                     <div
@@ -874,43 +777,10 @@
                     <div class="tok-radius-label">full<br />9999px</div>
                 </div>
             </div>
-        </div>
-        <div class="lib-code-wrapper">
-            <div class="lib-code-container">
-                <div
-                    class="lib-code"
-                    data-raw="--radius-none: 0px    --radius-sm: 6px
---radius-md: 12px     --radius-lg: 20px
---radius-xl: 30px     --radius-2xl: 40px
---radius-full: 9999px"
-                >
-                    <span class="s">--radius-none</span>: <span class="cn"
-                        >0px</span
-                    > &nbsp; <span class="s">--radius-sm</span>: <span
-                        class="cn">6px</span
-                    ><br />
-                    <span class="s">--radius-md</span>: <span class="cn"
-                        >12px</span
-                    > &nbsp;&nbsp; <span class="s">--radius-lg</span>: <span
-                        class="cn">20px</span
-                    ><br />
-                    <span class="s">--radius-xl</span>: <span class="cn"
-                        >30px</span
-                    > &nbsp;&nbsp; <span class="s">--radius-2xl</span>: <span
-                        class="cn">40px</span
-                    ><br />
-                    <span class="s">--radius-full</span>: <span class="cn"
-                        >9999px</span
-                    >
-                </div>
-            </div>
-        </div>
-    </div>
+        </Demo>
 
     <!-- ── Shadows ── -->
-    <div class="lib-component">
-        <div class="lib-component-label">Shadows</div>
-        <div class="lib-preview">
+    <Demo is:raw label={'Shadows'} code={shadowsCode}>
             <div class="tok-shadows">
                 <div class="tok-shadow-item">
                     <div
@@ -961,22 +831,5 @@
                     <div class="tok-shadow-var">--shadow-glow</div>
                 </div>
             </div>
-        </div>
-        <div class="lib-code-wrapper">
-            <div class="lib-code-container">
-                <div
-                    class="lib-code"
-                    data-raw="--shadow-sm      --shadow-md      --shadow-lg
---shadow-primary --shadow-accent  --shadow-glow"
-                >
-                    <span class="s">--shadow-sm</span> &nbsp; <span class="s"
-                        >--shadow-md</span
-                    > &nbsp; <span class="s">--shadow-lg</span><br />
-                    <span class="s">--shadow-primary</span> &nbsp; <span
-                        class="s">--shadow-accent</span
-                    > &nbsp; <span class="s">--shadow-glow</span>
-                </div>
-            </div>
-        </div>
-    </div>
+        </Demo>
 </section>
