@@ -219,6 +219,14 @@
     document.addEventListener('click', function (e) {
         if (!e.target || !e.target.closest) return;
 
+        /* Карточки тем (classless) — делегат переживает VT-своп body,
+           инлайн-обработчики страницы для этого не годятся */
+        var themeCard = e.target.closest('.theme-card[data-theme]');
+        if (themeCard) {
+            njxApplyTheme(themeCard.dataset.theme);
+            return;
+        }
+
         var toggle = e.target.closest('.lib-code-reveal-btn[data-code-toggle]');
         if (toggle) {
             var wrapper = toggle.nextElementSibling;

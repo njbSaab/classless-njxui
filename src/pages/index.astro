@@ -7,6 +7,14 @@ import LibsFooter from '../components/LibsFooter.astro';
 import Bottombar from '../components/Bottombar.astro';
 import ClasslessSidebarNav from '../components/ClasslessSidebarNav.astro';
 import { LIB_VERSION } from '../lib/meta';
+import { highlightHtml } from '../components/shared/code-utils.js';
+
+// «How It Feels» — цветной образец (build-time подсветка, канонические .k/.s/.cn)
+const clHeroSample = `<article>
+  <h2>Launch faster</h2>
+  <p>Write plain markup.</p>
+  <button>Ship</button>
+</article>`;
 
 // SoftwareSourceCode (roadmap 3.1.6) — classless-вариант библиотеки
 const ldJson = {
@@ -360,8 +368,15 @@ import Loading from '../components/classless-sections/Loading.astro';
                 height: 1px;
                 background: currentColor;
             }
+            /* палитра токенов подсветки (канон .k/.s/.cn) */
+            .cl-summary-code .k { color: #e06c75; }
+            .cl-summary-code .s { color: #e5c07b; }
+            .cl-summary-code .cn { color: #98c379; }
+            .cl-summary-code .c { color: #555; font-style: italic; }
             .cl-summary-code {
                 display: block;
+                white-space: pre;
+                overflow-x: auto;
                 margin-bottom: 12px;
                 padding: 16px;
                 border-radius: 16px;
@@ -885,13 +900,10 @@ import Loading from '../components/classless-sections/Loading.astro';
                                     <div class="cl-summary-label">
                                         How It Feels
                                     </div>
-                                    <code class="cl-summary-code"
-                                        >&lt;article&gt; &lt;h2&gt;Launch
-                                        faster&lt;/h2&gt; &lt;p&gt;Write plain
-                                        markup.&lt;/p&gt;
-                                        &lt;button&gt;Ship&lt;/button&gt;
-                                        &lt;/article&gt;</code
-                                    >
+                                    <code
+                                        class="cl-summary-code"
+                                        set:html={highlightHtml(clHeroSample)}
+                                    />
                                     <p class="cl-summary-note">
                                         <strong>Mode idea:</strong> semantic markup
                                         gets a readable visual layer right away, without
@@ -1068,14 +1080,8 @@ import Loading from '../components/classless-sections/Loading.astro';
     <LibsFooter activePage="classless" />
 
     <script is:inline>
-        // ── Theme switching ──
-        // Смена + синк карточек/пилюль/прочих индикаторов — njxApplyTheme;
-        // начальное состояние восстанавливает njx-site.js
-        document.querySelectorAll('.theme-card[data-theme]').forEach((card) =>
-            card.addEventListener('click', () =>
-                njxApplyTheme(card.dataset.theme),
-            ),
-        );
+        // Клики по .theme-card — делегированный обработчик в njx-site.js
+        // (переживает VT-навигацию; инлайн-навешивание здесь не перевыполнялось)
 
         // Поиск (⌘K) живёт в lib-docs.js (initSearch): секции этой страницы
         // имеют класс .lib-section и попадают в общий индекс, иконки — в общем
