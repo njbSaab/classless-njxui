@@ -1,0 +1,80 @@
+---
+
+const OV_FEATURES = [
+    {
+        icon: "🏷",
+        title: "Zero class names",
+        desc: "Every native HTML element — headings, buttons, inputs, tables, <code style=\"color:var(--color-primary)\">&lt;details&gt;</code> — is styled automatically via element selectors. Write semantic HTML, done.",
+        tag: "just HTML"
+    },
+    {
+        icon: "🎨",
+        title: "9 Themes, one attribute",
+        desc: "Dark, Light, Red, Blue, Green, Cyan, Yellow, Pink, Purple. Set <code style=\"color:var(--color-primary)\">data-theme</code> on &lt;html&gt; and the whole page re-tints. No JS framework needed.",
+        tag: "data-theme=\"purple\""
+    },
+    {
+        icon: "⚡",
+        title: "Zero build step",
+        desc: "One CDN link and you're running. No npm, no webpack, no PostCSS config. Works in any HTML file, today.",
+        tag: "CDN ready"
+    },
+    {
+        icon: "🎛",
+        title: "Variants via data-variant",
+        desc: "Accents and states without inventing classes — <code style=\"color:var(--color-primary)\">data-variant</code> on the element keeps your markup semantic.",
+        tag: "data-variant"
+    },
+    {
+        icon: "🛡",
+        title: "Scoped by design",
+        desc: "Styles activate only inside class-free <code style=\"color:var(--color-primary)\">&lt;main&gt;</code>, <code style=\"color:var(--color-primary)\">&lt;article&gt;</code>, <code style=\"color:var(--color-primary)\">&lt;section&gt;</code> and <code style=\"color:var(--color-primary)\">&lt;form&gt;</code> — coexists safely with any other CSS.",
+        tag: "no conflicts"
+    },
+    {
+        icon: "🔑",
+        title: "CSS Variables First",
+        desc: "The same 60+ design tokens as njX UI. Change <code style=\"color:var(--color-primary)\">--color-primary</code> once and it ripples through the page.",
+        tag: "60+ tokens"
+    },
+    {
+        icon: "◈",
+        title: "Upgrade path to Full",
+        desc: "Outgrew classless? The same <code style=\"color:var(--color-primary)\">njx-ui</code> package ships a full component library — 30+ components, utilities, gradients.",
+        tag: "njxui.dev"
+    },
+    {
+        icon: "📝",
+        title: "Perfect for Markdown",
+        desc: "Rendered Markdown is class-free by nature — docs, blogs and readmes look designed out of the box.",
+        tag: "docs & blogs"
+    },
+    {
+        icon: "🚀",
+        title: "Astro & SSG friendly",
+        desc: "npm i njx-ui + one import — or a single link tag. Zero JS shipped, a natural fit for content sites.",
+        tag: "import once"
+    }
+];
+---
+
+  <!-- ══════════════════════ FEATURES ══════════════════════ -->
+  <div class="sc-section" style="padding-top:40px; padding-bottom: 0;">
+    <div style="margin-bottom:40px">
+      <span class="sc-eyebrow">Why classless</span>
+      <h2 class="sc-heading">Semantic HTML.<br />Already styled.</h2>
+      <p class="sc-subheading">
+        Built on CSS custom properties from the ground up. No class names, no
+        preprocessors, no config files.
+      </p>
+    </div>
+    <div class="sc-features">
+      {OV_FEATURES.map((f) => (
+        <div class="sc-feat">
+          <span class="sc-feat-icon">{f.icon}</span><div class="sc-feat-title">
+            {f.title}
+          </div><div class="sc-feat-desc" set:html={f.desc} /><span class="sc-feat-tag">{f.tag}</span>
+        </div>
+      ))}
+    </div>
+  </div>

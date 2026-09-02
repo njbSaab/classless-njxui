@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PagesTopbar from '../components/PagesTopbar.astro';
+import PagesFooter from '../components/PagesFooter.astro';
+import Bottombar from '../components/Bottombar.astro';
+import '../styles/overview-page.css';
+import OvHero from '../components/ov-sections/OvHero.astro';
+import OvThemes from '../components/ov-sections/OvThemes.astro';
+import OvFeatures from '../components/ov-sections/OvFeatures.astro';
+import OvComparison from '../components/ov-sections/OvComparison.astro';
+import OvPhilosophy from '../components/ov-sections/OvPhilosophy.astro';
+const base = import.meta.env.BASE_URL;
+
+---
+
+<BaseLayout
+  title="Overview — njX Classless · 9 Themes for Plain Semantic HTML"
+  description="See njX Classless in action: one HTML attribute re-tints plain semantic HTML across 9 themes. ~7 KB gzipped, zero class names, zero build step."
+>
+  <!-- ══ NAV ══ -->
+  <PagesTopbar activePage="overview" />
+
+  <OvHero />
+
+  <OvThemes />
+
+  <OvFeatures />
+
+  <OvComparison />
+
+  <OvPhilosophy />
+
+  <!-- ══ FOOTER ══ -->
+  <PagesFooter activePage="overview" />
+  <Bottombar activePage="overview" />
+</BaseLayout>
+
+<!-- ══════════════════════ STYLES ══════════════════════ -->
+
+<!-- ══════════════════════ PAGE JS ══════════════════════ -->
+<script is:inline>
+  // Порядок и цвета — канон из src/data/themes.ts (единый для всех переключателей)
+  var OV_THEMES = [
+    ['dark', '#4a4a56'], ['light', '#e2e8f0'], ['red', '#f43f5e'],
+    ['blue', '#3b82f6'], ['green', '#22c55e'], ['cyan', '#00e5ff'],
+    ['yellow', '#facc15'], ['pink', '#ec4899'], ['purple', '#a855f7'],
+  ];
+  var OV_PG_MODES = {
+    auth: '<div class="pg-card full"><div class="t">Sign in</div><div class="x">Welcome back. Two-factor enabled.</div><div style="display:flex;flex-direction:column;gap:8px;margin-top:8px"><input class="inp inp-sm" placeholder="email@team.dev" style="font-size:12px"><input class="inp inp-sm" placeholder="••••••••" type="password" style="font-size:12px"><button class="btn btn-primary btn-sm" style="width:100%;justify-content:center;margin-top:4px">Continue</button></div></div><div class="pg-card"><div class="t">SSO</div><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;margin-top:6px">Google</button><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;margin-top:6px">GitHub</button></div><div class="pg-card"><div class="t">Status</div><div class="pg-tags"><span class="tag tag-primary">primary</span><span class="tag tag-success">live</span><span class="badge badge-error">3</span></div></div>',
+    dash: '<div class="pg-card full"><div class="t">Revenue · 7d</div><div class="x">+12.4% vs last week</div><div class="pg-progress"><div style="width:72%"></div></div><div class="pg-progress" style="margin-top:6px"><div style="width:48%"></div></div><div class="pg-progress" style="margin-top:6px"><div style="width:88%"></div></div></div><div class="pg-card"><div class="t">Users</div><div style="font-family:Poppins,sans-serif;font-size:24px;font-weight:900;color:var(--color-light);margin-top:4px">12,401</div><span class="tag tag-success" style="font-size:10px;margin-top:4px;display:inline-block">+4.2%</span></div><div class="pg-card"><div class="t">Errors</div><div style="font-family:Poppins,sans-serif;font-size:24px;font-weight:900;color:var(--color-light);margin-top:4px">0</div><span class="tag tag-primary" style="font-size:10px;margin-top:4px;display:inline-block">healthy</span></div>',
+    form: '<div class="pg-card full"><div class="t">New project</div><div class="x">Set the basics, you can change anything later.</div><div style="display:flex;flex-direction:column;gap:8px;margin-top:8px"><input class="inp inp-sm" placeholder="Project name" style="font-size:12px"><input class="inp inp-sm" placeholder="Slug · auto" style="font-size:12px"><div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap"><span class="tag tag-primary">web</span><span class="tag tag-filled-primary">api</span></div><div style="display:flex;gap:6px;margin-top:6px"><button class="btn btn-ghost btn-sm" style="flex:1;justify-content:center">Cancel</button><button class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Create</button></div></div></div>',
+  };
+
+  function initOvNew() {
+    var tsw = document.getElementById('ov-tswatches');
+    if (!tsw) return;
+
+    // ── Central theme setter ──
+    // Смена + синк (свотчи .s, пилюли .sc-tpill, тексты ov-attr*) —
+    // njxApplyTheme, все индикаторы описаны в реестре njx-site.js
+    function ovnApplyTheme(t) {
+      njxApplyTheme(t);
+    }
+
+    // ── Theme swatches (build once per navigation) ──
+    if (tsw.children.length === 0) {
+      OV_THEMES.forEach(function (pair) {
+        var t = pair[0], c = pair[1];
+        var s = document.createElement('span');
+        s.style.background = c;
+        s.dataset.t = t;
+        s.title = t;
+        s.onclick = function () { ovnApplyTheme(t); };
+        tsw.appendChild(s);
+      });
+    }
+
+    // Sync to saved theme — только синк индикаторов, БЕЗ njxApplyTheme:
+    // сама тема уже восстановлена (njx.js/BaseLayout), а вызов сеттера
+    // здесь генерировал бы ложное GA-событие theme_change на каждый визит
+    var curTheme = (function () {
+      try { return localStorage.getItem('njx-theme') || 'dark'; } catch (e) { return 'dark'; }
+    })();
+    njxSyncThemeUI(curTheme);
+
+    // Sync pills
+    document.querySelectorAll('.sc-tpill').forEach(function (p) {
+      p.onclick = function () { ovnApplyTheme(p.dataset.t); };
+    });
+
+    // ── Playground modes ──
+    function setMode(m) {
+      var body = document.getElementById('ov-pgbody');
+      if (body) body.innerHTML = OV_PG_MODES[m] || '';
+      document.querySelectorAll('#ov-modeseg button').forEach(function (b) {
+        b.classList.toggle('on', b.dataset.m === m);
+      });
+    }
+    document.querySelectorAll('#ov-modeseg button').forEach(function (b) {
+      b.onclick = function () { setMode(b.dataset.m); };
+    });
+    setMode('auth');
+  }
+
+  initOvNew();
+  document.addEventListener('astro:page-load', initOvNew);
+</script>
