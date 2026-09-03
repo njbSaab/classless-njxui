@@ -1,17 +1,17 @@
 # njX Classless
 
-> njX Classless (part of the `njx-ui` npm package) is a classless CSS stylesheet: it styles plain semantic HTML — headings, buttons, forms, tables, dialogs, details — with zero class names, zero dependencies and zero build tools. 48 KB minified (~7 KB gzipped), 9 built-in themes via a single `data-theme` attribute. MIT license. The full component library (30+ components, utilities) lives at https://njxui.dev.
+> njX Classless (npm: `classless-njxui`) is a classless CSS stylesheet: it styles plain semantic HTML — headings, buttons, forms, tables, dialogs, details — with zero class names, zero dependencies and zero build tools. 48 KB minified (~7 KB gzipped), 9 built-in themes via a single `data-theme` attribute. MIT license. The full component library (30+ components, utilities) lives at https://njxui.dev.
 
 ## Install
 
 CDN (recommended — no build step):
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/njx-ui@1/css/classless.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/classless-njxui@1/classless.min.css">
 <html data-theme="dark">
 ```
 
-npm: `npm install njx-ui` → `node_modules/njx-ui/css/classless.min.css` (package name is `njx-ui`).
+npm: `npm install classless-njxui` → `import 'classless-njxui'` (also ships inside the `njx-ui` package as `css/classless.min.css`).
 
 ## Usage
 
@@ -39,4 +39,4 @@ Switch with one attribute: `<html data-theme="purple">`. Variants via `data-vari
 - Site: https://classless.njxui.dev
 - Full library (components + utilities): https://njxui.dev
 - GitHub: https://github.com/njbSaab/njx-css-ui
-- npm: https://www.npmjs.com/package/njx-ui
+- npm: https://www.npmjs.com/package/classless-njxui

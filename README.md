@@ -1,11 +1,11 @@
 # Classless njxui
 
-**njX Classless** (ships in the [`njx-ui`](https://www.npmjs.com/package/njx-ui) npm package) is a classless CSS stylesheet: it styles **plain semantic HTML** — headings, buttons, forms, tables, dialogs, `<details>` — with **zero class names, zero dependencies, zero build step**. 48 KB minified, **~7 KB gzip**, 9 built-in themes.
+**njX Classless** (npm: [`classless-njxui`](https://www.npmjs.com/package/classless-njxui)) is a classless CSS stylesheet: it styles **plain semantic HTML** — headings, buttons, forms, tables, dialogs, `<details>` — with **zero class names, zero dependencies, zero build step**. 48 KB minified, **~7 KB gzip**, 9 built-in themes.
 
 One link — done:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/njx-ui@1/css/classless.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/classless-njxui@1/classless.min.css">
 ```
 
 ```html
@@ -37,12 +37,16 @@ You write semantic HTML; the stylesheet does the rest. Perfect for docs, blogs, 
 
 ```html
 <!-- CDN, major version (recommended) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/njx-ui@1/css/classless.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/classless-njxui@1/classless.min.css">
 ```
 
 ```bash
-npm install njx-ui
-# → node_modules/njx-ui/css/classless.min.css
+npm install classless-njxui
+```
+
+```js
+// bundler / Astro / Vite
+import 'classless-njxui';
 ```
 
 ## Themes

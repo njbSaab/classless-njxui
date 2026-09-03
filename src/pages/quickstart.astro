@@ -58,7 +58,7 @@ const base = import.meta.env.BASE_URL;
           meta: '~10s',
           d: 'Paste this single &lt;link&gt; into your &lt;head&gt;. One file — 47 KB standalone.',
           get code() {
-            return '&lt;<span class="sh-tag">link</span> <span class="attr">rel</span>=<span class="str">"stylesheet"</span> <span class="attr">href</span>=<span class="str">"https://cdn.jsdelivr.net/npm/njx-ui@1/css/classless.min.css"</span>&gt;';
+            return '&lt;<span class="sh-tag">link</span> <span class="attr">rel</span>=<span class="str">"stylesheet"</span> <span class="attr">href</span>=<span class="str">"https://cdn.jsdelivr.net/npm/classless-njxui@1/classless.min.css"</span>&gt;';
           },
           check: 'Pasted',
         },
@@ -82,14 +82,14 @@ const base = import.meta.env.BASE_URL;
           h: 'Install package',
           meta: '~30s',
           d: 'Add the package. Works with npm, pnpm, yarn or bun.',
-          code: '<span class="com"># pick your manager</span>\nnpm  install njx-ui\npnpm add     njx-ui',
+          code: '<span class="com"># pick your manager</span>\nnpm  install classless-njxui\npnpm add     classless-njxui',
           check: 'Installed',
         },
         {
           h: 'Import classless CSS',
           meta: '~5s',
           d: 'Import only the classless file — 47 KB, no component classes.',
-          code: '<span class="com">// src/main.ts (or main.js)</span>\n<span class="sh-tag">import</span> <span class="str">"njx-ui/css/classless.min.css"</span>;',
+          code: '<span class="com">// src/main.ts (or main.js)</span>\n<span class="sh-tag">import</span> <span class="str">"classless-njxui"</span>;',
           check: 'Imported',
         },
         {
@@ -259,7 +259,7 @@ const base = import.meta.env.BASE_URL;
 &lt;<span class="sh-tag">!DOCTYPE</span> html&gt;
 &lt;<span class="sh-tag">html</span> <span class="attr">data-theme</span>=<span class="str">"dark"</span>&gt;
 &lt;<span class="sh-tag">head</span>&gt;
-  <span class="hi">&lt;<span class="sh-tag">link</span> <span class="attr">rel</span>=<span class="str">"stylesheet"</span> <span class="attr">href</span>=<span class="str">"https://cdn.jsdelivr.net/npm/njx-ui@1/css/classless.min.css"</span>&gt;
+  <span class="hi">&lt;<span class="sh-tag">link</span> <span class="attr">rel</span>=<span class="str">"stylesheet"</span> <span class="attr">href</span>=<span class="str">"https://cdn.jsdelivr.net/npm/classless-njxui@1/classless.min.css"</span>&gt;
 </span>&lt;/<span class="sh-tag">head</span>&gt;
 &lt;<span class="sh-tag">body</span>&gt;
   &lt;<span class="sh-tag">button</span>&gt;Ship it&lt;/<span class="sh-tag">button</span>&gt;
@@ -274,7 +274,7 @@ const base = import.meta.env.BASE_URL;
             lang: 'JS',
             fname: 'main.ts',
             code: `<span class="com">// terminal</span>
-<span class="kw">$</span> npm install njx-ui
+<span class="kw">$</span> npm install classless-njxui
 
 <span class="com">// src/main.ts</span>
 <span class="hi"><span class="kw">import</span> <span class="str">"njx-ui/css/style.min.css"</span>;

@@ -12,5 +12,7 @@ export const CDN_JS = `https://cdn.jsdelivr.net/npm/${NPM_PACKAGE}@${LIB_MAJOR}/
 export const SIZE_FULL           = '308 KB';  // style.min.css (44 KB gzip)
 export const SIZE_FULL_GZIP      = '44 KB';
 export const SIZE_CLASSLESS      = '48 KB';   // classless.min.css
+// Собственный npm-пакет classless (2026-09-03); старый путь njx-ui@1/css/… остаётся рабочим
+export const CDN_CLASSLESS = 'https://cdn.jsdelivr.net/npm/classless-njxui@1/classless.min.css';
 export const SIZE_CLASSLESS_SRC  = '~62 KB';  // classless.css (unminified _base + _native)
 export const SIZE_JS             = '14 KB';   // njx.js

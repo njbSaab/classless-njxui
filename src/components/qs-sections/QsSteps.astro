@@ -1,9 +1,9 @@
 ---
 import CodeBlock from '../shared/CodeBlock.astro';
-import { CDN_BASE } from '../../lib/meta';
+import { CDN_CLASSLESS } from '../../lib/meta';
 
 const qsLinkClassless = `
-<link rel="stylesheet" href="${CDN_BASE}classless.min.css">
+<link rel="stylesheet" href="${CDN_CLASSLESS}">
 `;
 const qsTheme = `
 <html lang="en" data-theme="dark">
@@ -21,7 +21,7 @@ const qsBoilerplateClassless = `
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet"
-        href="${CDN_BASE}classless.min.css">
+        href="${CDN_CLASSLESS}">
   <title>My App</title>
 </head>
 <body>
